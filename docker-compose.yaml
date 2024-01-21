@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  server:
+    build:
+      context: .
+    image: "datink"
+    command: [ "./datink", "server" ]
+    environment:
+      DB_HOST: postgres_db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: datink
+    expose:
+      - "9000"
+    ports:
+      - "9000:9000"
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+    restart: always
+  postgres_db:
+    image: postgres:13-alpine
+    command: postgres -c 'max_connections=500'
+    user: postgres
+    environment:
+      POSTGRES_DB: datink
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    restart: always
+    #   https://github.com/peter-evans/docker-compose-healthcheck
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

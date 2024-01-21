@@ -1,0 +1,491 @@
+basePath: /
+definitions:
+  datink_internal_models_package_entity.Package:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+      updatedAt:
+        type: string
+    type: object
+  datink_internal_models_swipe_dto.SwipingRequest:
+    properties:
+      friendID:
+        type: integer
+      swipeDirection:
+        $ref: '#/definitions/datink_internal_models_swipe_entity.SwipeDirection'
+    required:
+    - friendID
+    - swipeDirection
+    type: object
+  datink_internal_models_swipe_dto.SwipingResponse:
+    properties:
+      id:
+        type: integer
+    type: object
+  datink_internal_models_swipe_entity.SwipeDirection:
+    enum:
+    - LIKE
+    - MATCH
+    - DISLIKE
+    type: string
+    x-enum-varnames:
+    - SwipeDirectionLike
+    - SwipeDirectionMatch
+    - SwipeDirectionDisLike
+  datink_internal_models_user_dto.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  datink_internal_models_user_dto.LoginResponse:
+    properties:
+      accessToken:
+        type: string
+    type: object
+  datink_internal_models_user_dto.SignUpRequest:
+    properties:
+      birthdate:
+        type: string
+      email:
+        type: string
+      gender:
+        enum:
+        - male
+        - female
+        - prefer_not_to
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    required:
+    - birthdate
+    - email
+    - name
+    - password
+    type: object
+  datink_internal_models_user_dto.SignUpResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  datink_internal_models_user_entity.User:
+    properties:
+      birthdate:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      isPremium:
+        type: boolean
+      name:
+        type: string
+      password:
+        type: string
+      pictures:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        type: string
+      verified:
+        type: boolean
+    type: object
+  datink_internal_models_userPackage_dto.UserPackagePurchaseRequest:
+    properties:
+      packageID:
+        type: integer
+    required:
+    - packageID
+    type: object
+  datink_internal_models_userPackage_dto.UserPackagePurchaseResponse:
+    properties:
+      id:
+        type: integer
+    type: object
+  datink_pkg_util_httputil.ErrorResponse:
+    properties:
+      code:
+        type: integer
+      errors: {}
+      message:
+        type: string
+    type: object
+  datink_pkg_util_httputil.SuccessResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a doc for Invoice.
+  title: DATINK SERVICES
+paths:
+  /v1/swipe:
+    post:
+      operationId: Swiping
+      parameters:
+      - description: request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/datink_internal_models_swipe_dto.SwipingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/datink_internal_models_swipe_dto.SwipingResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+      security:
+      - JWTAuth: []
+      tags:
+      - Swipe
+  /v1/user/login:
+    post:
+      operationId: Login
+      parameters:
+      - description: request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/datink_internal_models_user_dto.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/datink_internal_models_user_dto.LoginResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+      tags:
+      - User
+  /v1/user/match:
+    get:
+      operationId: FindUserMatch
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.SuccessResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/datink_internal_models_user_entity.User'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+      security:
+      - JWTAuth: []
+      summary: Get List User has been match
+      tags:
+      - User
+  /v1/user/matching:
+    get:
+      operationId: FindUserMatching
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.SuccessResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/datink_internal_models_user_entity.User'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+      security:
+      - JWTAuth: []
+      summary: Get List UserMatching
+      tags:
+      - User
+  /v1/user/packages:
+    get:
+      operationId: FindAllPackages
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.SuccessResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/datink_internal_models_package_entity.Package'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+      tags:
+      - Packages
+  /v1/user/signup:
+    post:
+      operationId: SignUp
+      parameters:
+      - description: request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/datink_internal_models_user_dto.SignUpRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/datink_internal_models_user_dto.SignUpResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+      tags:
+      - User
+  /v1/user/user-package/purchase:
+    post:
+      operationId: Purchase
+      parameters:
+      - description: request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/datink_internal_models_userPackage_dto.UserPackagePurchaseRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/datink_internal_models_userPackage_dto.UserPackagePurchaseResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/datink_pkg_util_httputil.ErrorResponse'
+            - properties:
+                errors:
+                  items:
+                    type: string
+                  type: array
+              type: object
+      security:
+      - JWTAuth: []
+      tags:
+      - UserPackage
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
