@@ -13,6 +13,7 @@ import (
 //
 //	@ID			SignUp
 //	@Tags		User
+//	@Summary	User Signup
 //	@Produce	json
 //	@Param		request			body		dto.SignUpRequest	true	"request body"
 //	@Success	201				{object}	httputil.SuccessResponse{data=dto.SignUpResponse}

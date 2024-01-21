@@ -11,6 +11,7 @@ import (
 //
 //	@ID			FindAllPackages
 //	@Tags		Packages
+//	@Summary	List all packages
 //	@Produce	json
 //	@Success	200					{object}	httputil.SuccessResponse{data=[]entity.Package}
 //	@Failure	500					{object}	httputil.ErrorResponse{errors=[]string}

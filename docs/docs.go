@@ -28,6 +28,7 @@ const docTemplate = `{
                 "tags": [
                     "Swipe"
                 ],
+                "summary": "Swiping user",
                 "operationId": "Swiping",
                 "parameters": [
                     {
@@ -112,6 +113,7 @@ const docTemplate = `{
                 "tags": [
                     "User"
                 ],
+                "summary": "User Login",
                 "operationId": "Login",
                 "parameters": [
                     {
@@ -388,6 +390,7 @@ const docTemplate = `{
                 "tags": [
                     "Packages"
                 ],
+                "summary": "List all packages",
                 "operationId": "FindAllPackages",
                 "responses": {
                     "200": {
@@ -464,6 +467,7 @@ const docTemplate = `{
                 "tags": [
                     "User"
                 ],
+                "summary": "User Signup",
                 "operationId": "SignUp",
                 "parameters": [
                     {
@@ -553,6 +557,7 @@ const docTemplate = `{
                 "tags": [
                     "UserPackage"
                 ],
+                "summary": "Purchase User Premium Package",
                 "operationId": "Purchase",
                 "parameters": [
                     {

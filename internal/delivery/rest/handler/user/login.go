@@ -12,6 +12,7 @@ import (
 //	@ID			Login
 //	@Tags		User
 //	@Produce	json
+//	@Summary	User Login
 //	@Param		request			body		dto.LoginRequest	true	"request body"
 //	@Success	200				{object}	httputil.SuccessResponse{data=dto.LoginResponse}
 //	@Failure	500				{object}	httputil.ErrorResponse{errors=[]string}

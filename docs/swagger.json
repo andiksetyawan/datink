@@ -20,6 +20,7 @@
                 "tags": [
                     "Swipe"
                 ],
+                "summary": "Swiping user",
                 "operationId": "Swiping",
                 "parameters": [
                     {
@@ -104,6 +105,7 @@
                 "tags": [
                     "User"
                 ],
+                "summary": "User Login",
                 "operationId": "Login",
                 "parameters": [
                     {
@@ -380,6 +382,7 @@
                 "tags": [
                     "Packages"
                 ],
+                "summary": "List all packages",
                 "operationId": "FindAllPackages",
                 "responses": {
                     "200": {
@@ -456,6 +459,7 @@
                 "tags": [
                     "User"
                 ],
+                "summary": "User Signup",
                 "operationId": "SignUp",
                 "parameters": [
                     {
@@ -545,6 +549,7 @@
                 "tags": [
                     "UserPackage"
                 ],
+                "summary": "Purchase User Premium Package",
                 "operationId": "Purchase",
                 "parameters": [
                     {

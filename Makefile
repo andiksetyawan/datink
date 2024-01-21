@@ -34,5 +34,5 @@ docker-compose-stop:
 	docker-compose down
 
 swag:
-	@swag f && swag init -pd -g ./cmd/server/main.go -o ./docs
+	@swag f && swag init -pd -g ./cmd/datink/main.go -o ./docs
 

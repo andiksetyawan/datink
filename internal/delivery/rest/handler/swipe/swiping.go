@@ -14,6 +14,7 @@ import (
 //	@ID			Swiping
 //	@Tags		Swipe
 //	@Produce	json
+//	@Summary	Swiping user
 //	@Security	JWTAuth
 //	@Param		request	body		dto.SwipingRequest	true	"request body"
 //	@Success	200		{object}	httputil.SuccessResponse{data=dto.SwipingResponse}

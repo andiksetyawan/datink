@@ -16,6 +16,7 @@ import (
 //	@ID			Purchase
 //	@Tags		UserPackage
 //	@Produce	json
+//	@Summary	Purchase User Premium Package
 //	@Security	JWTAuth
 //	@Param		request							body		dto.UserPackagePurchaseRequest	true	"request body"
 //	@Success	201								{object}	httputil.SuccessResponse{data=dto.UserPackagePurchaseResponse}

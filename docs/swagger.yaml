@@ -194,6 +194,7 @@ paths:
               type: object
       security:
       - JWTAuth: []
+      summary: Swiping user
       tags:
       - Swipe
   /v1/user/login:
@@ -240,6 +241,7 @@ paths:
                     type: string
                   type: array
               type: object
+      summary: User Login
       tags:
       - User
   /v1/user/match:
@@ -387,6 +389,7 @@ paths:
                     type: string
                   type: array
               type: object
+      summary: List all packages
       tags:
       - Packages
   /v1/user/signup:
@@ -433,6 +436,7 @@ paths:
                     type: string
                   type: array
               type: object
+      summary: User Signup
       tags:
       - User
   /v1/user/user-package/purchase:
@@ -481,6 +485,7 @@ paths:
               type: object
       security:
       - JWTAuth: []
+      summary: Purchase User Premium Package
       tags:
       - UserPackage
 securityDefinitions:
